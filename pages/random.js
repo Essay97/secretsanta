@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import styles from "../styles/Random.module.css";
 import { PeopleContext } from "../context/PeopleProvider";
 import Image from "next/image";
@@ -21,6 +21,24 @@ function shuffle(array) {
   return array;
 }
 
+function makePairs(people) {
+  const pairs = [];
+  const presents = [...people];
+
+  shuffle(presents);
+
+  for (let i = 0; i < people.length; i++) {
+    pairs.push({
+      person: presents[i],
+      present: presents[(i + 1) % presents.length],
+    });
+  }
+
+  shuffle(pairs);
+
+  return pairs;
+}
+
 export default function Random() {
   const { people } = useContext(PeopleContext);
   const [pairs, setPairs] = useState([]);
@@ -28,27 +46,9 @@ export default function Random() {
   const [showName, setShowName] = useState(false);
   const [endGame, setEndGame] = useState(false);
 
-  function makePairs() {
-    const _pairs = [];
-    const presentsList = [...people];
-
-    shuffle(presentsList);
-
-    for (let i = 0; i < people.length; i++) {
-      _pairs.push({
-        person: presentsList[i],
-        present: presentsList[(i + 1) % presentsList.length],
-      });
-    }
-
-    shuffle(_pairs);
-
-    return _pairs;
-  }
-
   useEffect(() => {
-    setPairs(makePairs());
-  }, []);
+    setPairs(makePairs(people));
+  }, [people]);
 
   useEffect(() => {
     if (idx >= people.length) {
@@ -56,7 +56,7 @@ export default function Random() {
     } else {
       setShowName(false);
     }
-  }, [idx]);
+  }, [idx, people.length]);
 
   function handleNext() {
     setIdx((prev) => prev + 1);
@@ -81,6 +81,7 @@ export default function Random() {
           width={300}
           height={350}
           onClick={() => setShowName(true)}
+          alt="regalo"
         />
       )}
     </>
