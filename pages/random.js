@@ -47,13 +47,7 @@ export default function Random() {
   }
 
   useEffect(() => {
-    console.log(`idx: ${idx}, length: ${pairs.length}, endGame: ${endGame}`);
-  });
-
-  useEffect(() => {
-    const p = makePairs();
-    console.log(p);
-    setPairs(p);
+    setPairs(makePairs());
   }, []);
 
   useEffect(() => {
