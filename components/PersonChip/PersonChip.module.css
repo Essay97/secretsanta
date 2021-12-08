@@ -1,0 +1,14 @@
+.chip {
+  display: flex;
+  background-color: rgb(105, 23, 23);
+  gap: 20px;
+  color: white;
+  align-items: center;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.chip:hover {
+  transform: scale(1.05);
+  transition: all 100ms;
+}
