@@ -53,12 +53,11 @@ export default function Random() {
   useEffect(() => {
     if (idx >= people.length) {
       setEndGame(true);
-    } else {
-      setShowName(false);
     }
   }, [idx, people.length]);
 
   function handleNext() {
+    setShowName(false);
     setIdx((prev) => prev + 1);
   }
 
